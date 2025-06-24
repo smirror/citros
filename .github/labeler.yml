@@ -1,8 +1,12 @@
 github_actions:
-  - ".github/**/*.yml"
+  - changed-files:
+    - any-glob-to-any-file: ".github/**/*.yml"
 documentation:
-  - "**/*.md"
-  - "docs/**/*"
-  - "website/**/*"
+  - changed-files:
+    - any-glob-to-any-file: 
+      - "**/*.md"
+      - "docs/**/*"
+      - "website/**/*"
 dependencies:
-  - "**/go.mod"
+  - changed-files:
+    - any-glob-to-any-file: "**/go.mod"
