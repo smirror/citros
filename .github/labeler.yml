@@ -1,8 +1,39 @@
 github_actions:
-  - ".github/**/*.yml"
+  - changed-files:
+    - any-glob-to-any-file: ".github/**/*.yml"
+
 documentation:
-  - "**/*.md"
-  - "docs/**/*"
-  - "website/**/*"
+  - changed-files:
+    - any-glob-to-any-file: 
+      - "**/*.md"
+      - "docs/**/*"
+      - "website/**/*"
+
 dependencies:
-  - "**/go.mod"
+  - changed-files:
+    - any-glob-to-any-file: 
+      - "**/Cargo.toml"
+      - "**/Cargo.lock"
+
+rust:
+  - changed-files:
+    - any-glob-to-any-file: "**/*.rs"
+
+build:
+  - changed-files:
+    - any-glob-to-any-file:
+      - "**/build.rs"
+      - "**/build.sh"
+      - "**/Makefile"
+
+tests:
+  - changed-files:
+    - any-glob-to-any-file:
+      - "**/tests/**/*"
+      - "**/*test*.rs"
+
+uefi:
+  - changed-files:
+    - any-glob-to-any-file:
+      - "**/*uefi*"
+      - "**/esp/**/*"

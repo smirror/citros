@@ -15,8 +15,11 @@ jobs:
     permissions:
       contents: read
       pull-requests: write
+      issues: write
 
     steps:
     - uses: actions/labeler@v5
       with:
         repo-token: "${{ secrets.GITHUB_TOKEN }}"
+        configuration-path: .github/labeler.yml
+        sync-labels: false
