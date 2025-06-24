@@ -1,4 +1,5 @@
 github_actions:
+<<<<<<< HEAD
   - changed-files:
     - any-glob-to-any-file: ".github/**/*.yml"
 
@@ -37,3 +38,12 @@ uefi:
     - any-glob-to-any-file:
       - "**/*uefi*"
       - "**/esp/**/*"
+=======
+  - ".github/**/*.yml"
+documentation:
+  - "**/*.md"
+  - "docs/**/*"
+  - "website/**/*"
+dependencies:
+  - "**/go.mod"
+>>>>>>> origin/osbookday02b

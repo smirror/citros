@@ -1,10 +1,16 @@
 [package]
 name = "citros"
-version = "0.1.0"
+version = "0.2.1"
 edition = "2024"
 
-[dependencies]
-uefi = "0.35.0"
+[[bin]]
+name = "citros"
+path = "src/main.rs"
 
-[build]
-target = "x86_64-unknown-uefi"
+[dependencies]
+# no_std環境なので、標準ライブラリは使用しない
+
+[profile.release]
+panic = "abort"
+lto = true
+opt-level = 3
