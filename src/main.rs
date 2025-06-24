@@ -18,5 +18,4 @@ fn efi_main() -> Status {
     });
 
     loop {}
-    Status::SUCCESS
 }
