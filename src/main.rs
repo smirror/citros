@@ -4,7 +4,6 @@
 use uefi::prelude::*;
 use core::panic::PanicInfo;
 
-#[cfg(not(test))]
 #[panic_handler]
 fn panic(_info: &PanicInfo) -> ! {
     loop {}
@@ -18,5 +17,6 @@ fn efi_main() -> Status {
         stdout.output_string(cstr16!("Hello, World from UEFI!\r\n")).ok();
     });
 
+    loop {}
     Status::SUCCESS
 }
