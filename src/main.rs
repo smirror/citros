@@ -64,20 +64,20 @@ impl MemoryMap {
             descriptor_version: 0,
         }
     }
-    
-    pub fn get_memory_map(&mut self, boot_services: &BootServices) 
+
+    pub fn get_memory_map(&mut self, boot_services: &BootServices)
         -> Result<(), MemoryMapError> {
         // バッファの存在確認
         if self.buffer.is_none() {
             return Err(MemoryMapError::BufferTooSmall);
         }
-        
+
         self.map_size = self.buffer_size;
-        
+
         // GetMemoryMapを呼び出し
         let status = unsafe {
             let buffer_ptr = self.buffer.as_mut().unwrap().as_mut_ptr();
-            
+
             (boot_services.get_memory_map)(
                 &mut self.map_size as *mut usize,
                 buffer_ptr as *mut EfiMemoryDescriptor,
@@ -86,7 +86,7 @@ impl MemoryMap {
                 &mut self.descriptor_version as *mut u32,
             )
         };
-        
+
         match status {
             EFI_SUCCESS => Ok(()),
             EFI_BUFFER_TOO_SMALL => Err(MemoryMapError::BufferTooSmall),
@@ -97,18 +97,18 @@ impl MemoryMap {
 
 // よりシンプルなC言語スタイルの実装（元のコードに近い）
 pub unsafe fn get_memory_map_simple(
-    map: *mut MemoryMap, 
+    map: *mut MemoryMap,
     boot_services: *const BootServices
 ) -> EfiStatus {
     unsafe {
         if (*map).buffer.is_none() {
             return EFI_BUFFER_TOO_SMALL;
         }
-        
+
         (*map).map_size = (*map).buffer_size;
-        
+
         let buffer = (*map).buffer.as_mut().unwrap();
-        
+
         ((*boot_services).get_memory_map)(
             &mut (*map).map_size as *mut usize,
             buffer.as_mut_ptr() as *mut EfiMemoryDescriptor,
