@@ -4,7 +4,20 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-CitrOS is an educational operating system written in Rust, influenced by MikanOS. This is a minimal OS development project currently in early stages.
+CitrOS is an educational operating system written in Rust, inspired by MikanOS. It's a bare-metal UEFI application project currently in early development stages (v0.1.0).
+
+**Key Features:**
+- **Language**: Rust with `#![no_std]` and `#![no_main]` attributes for bare-metal programming
+- **Target Platform**: x86_64 UEFI environment
+- **Target**: x86_64-unknown-uefi platform for UEFI compatibility
+- **Build Configuration**: Uses uefi crate for UEFI API access
+
+**Current Implementation:**
+- UEFI entry point (`efi_main`) with basic initialization
+- Simple "Hello, World from UEFI!" output using UEFI text output protocol
+- Custom panic handler for no_std environment
+- Infinite loop placeholder for future OS kernel development
+- Uses the `uefi` crate for UEFI API access
 
 ## Development Commands
 
@@ -63,41 +76,54 @@ cargo fmt -- --check
 
 ## Project Structure
 
-- `src/main.rs` - Main entry point with basic "Hello, world!" implementation
-- `Cargo.toml` - Standard Rust project configuration with no external dependencies yet
-- The project follows standard Rust project structure
+- `src/main.rs` - Main UEFI application entry point with basic "Hello World" implementation
+- `Cargo.toml` - Rust project configuration (v0.1.0, uses uefi crate v0.35.0)
+- `qemu_run.sh` - QEMU testing script for UEFI environment
+- `mikanos-build/` - MikanOS reference build tools and resources
+- `README.md` - Basic project description and setup instructions
+- `.github/workflows/` - CI/CD workflows for Rust builds and security analysis
 
 ## Architecture Notes
 
-This is currently a minimal Rust project in the initial stages of OS development. The codebase structure will evolve as the operating system features are implemented. As an educational OS project inspired by MikanOS, expect future development to focus on:
+CitrOS is a bare-metal UEFI application built with Rust's no_std environment. The current implementation is in its initial stages, providing a foundation for future OS development.
 
-- Kernel development fundamentals
-- Low-level system programming
-- Hardware abstraction layers
-- Memory management
-- Process management
+**Current Features:**
+- Bare-metal Rust environment (`#![no_std]`, `#![no_main]`)
+- UEFI entry point with basic console output
+- Uses the `uefi` crate for UEFI API access and helper functions
+- Simple panic handler for no_std environment
+
+**Future Development Areas:**
+- Kernel development fundamentals and boot process
+- Hardware abstraction layers and device drivers
+- Advanced memory management and paging
+- Process and thread management
+- File system and storage management
 
 ## Dependencies
 
-- `uefi` (0.26): Core UEFI API bindings for Rust
-- `uefi-services` (0.20): Higher-level UEFI services and utilities
+CitrOS uses minimal dependencies for UEFI development:
+
+- **uefi** (v0.35.0) - Provides UEFI API bindings and helper functions
+- Target configured for `x86_64-unknown-uefi` platform
+- No other external dependencies, keeping the codebase minimal for educational purposes
 
 ## UEFI Application Structure
 
-CitrOS is now a UEFI application that:
+CitrOS is a UEFI application that:
 
 1. **Entry Point**: Uses `#[entry]` attribute for UEFI entry point
 2. **No Standard Library**: Uses `#![no_std]` and `#![no_main]` attributes
-3. **Console Output**: Uses UEFI Simple Text Output Protocol
-4. **Input Handling**: Waits for keyboard input using Simple Text Input Protocol
-5. **Memory Management**: Uses UEFI Boot Services
+3. **Console Output**: Uses UEFI Simple Text Output Protocol via `uefi` crate helpers
+4. **Initialization**: Calls `uefi::helpers::init()` to set up UEFI environment
+5. **Current Behavior**: Displays "Hello, World from UEFI!" and enters an infinite loop
 
 ### UEFI Boot Process
 
 1. UEFI firmware loads the application from ESP (EFI System Partition)
-2. Application initializes UEFI services
-3. Displays welcome messages and waits for user input
-4. Cleanly exits returning to UEFI shell
+2. Application initializes UEFI services with `uefi::helpers::init()`
+3. Displays welcome message to console
+4. Currently enters infinite loop (placeholder for future OS kernel)
 
 ## CI/CD
 
