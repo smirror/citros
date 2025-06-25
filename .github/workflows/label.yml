@@ -15,17 +15,11 @@ jobs:
     permissions:
       contents: read
       pull-requests: write
-<<<<<<< HEAD
       issues: write
-=======
->>>>>>> origin/osbookday02b
 
     steps:
     - uses: actions/labeler@v5
       with:
         repo-token: "${{ secrets.GITHUB_TOKEN }}"
-<<<<<<< HEAD
         configuration-path: .github/labeler.yml
         sync-labels: false
-=======
->>>>>>> origin/osbookday02b
